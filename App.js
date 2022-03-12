@@ -3,6 +3,7 @@ import React, { useMemo, useReducer } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Root from './src/navigation/Root';
 import { AuthContext } from './src/utils/AuthContext';
+import {SafeAreaProvider} from 'react-native-safe-area-context'
 
 
 export default function App() {
@@ -41,15 +42,18 @@ export default function App() {
       setTimeout(()=>{
         dispatch({type: "SIGN_IN", token,user})
       }, 2000)
+    },
+    signOut: async () => {
+      dispatch("SIGN_OUT")
     }
   }), [])
 
   return (
     <>
       <AuthContext.Provider value={{...state, ...authContext}}>
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaProvider style={{flex: 1}}>
           <Root/>
-        </SafeAreaView>
+        </SafeAreaProvider>
       </AuthContext.Provider>
     </>
   );
